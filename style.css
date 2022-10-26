@@ -1,0 +1,119 @@
+html {
+    --deepBlue :#00204a; 
+    --blue :#005792; 
+    --lightBlue :#00bbf0;
+    --yellow :#fdb44b; 
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+nav {
+    background-color: var(--blue);
+    width: 100hh;
+    color: var(--yellow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 12vh;
+    border-bottom-width: 0.2rem;
+    border-bottom-color: white;
+    border-bottom-style: solid;
+}
+
+nav h1 {
+    font-size: 2rem;
+    padding-bottom: 0.5rem;
+}
+
+nav h4 {
+    font-style: italic;
+    color: white
+}
+
+body {
+    background-color: var(--deepBlue);
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5rem;
+}
+
+aside {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 2.2rem;
+    margin: 0 8rem;
+}
+
+.counters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+aside button {
+    background-color: var(--yellow);
+    border-color: white;
+    border-radius: 0.4rem;
+    border-width: 0.3rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 1.5rem;
+    color: white;
+    border-style: solid;
+    text-shadow: grey;
+    transition-property: background-color, transform;
+    transition-duration: 0.6s, 0.1s;
+    transition-timing-function: ease-out;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: var(--lightBlue);
+}
+
+button:active {
+    background: var(--deepBlue);
+    transform: scale(80%);
+}
+
+.game-container {
+    padding: 1rem;
+    border-width: 0.2rem;
+    border-color: white;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.card-row {
+    margin: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    width: 7rem;
+    height: 7rem;
+    background-color: white;
+    margin: 0 0.3rem;
+    color: black;
+    text-align: center;
+}
