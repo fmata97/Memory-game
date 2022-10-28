@@ -1,8 +1,8 @@
 html {
-    --deepBlue :#00204a; 
-    --blue :#005792; 
-    --lightBlue :#00bbf0;
-    --yellow :#fdb44b; 
+    --deepBlue : #0c2233/* #00204a */; 
+    --blue : #083d56/* #005792 */; 
+    --lightBlue : #0e5f76/* #00bbf0 */;
+    --yellow : /* #fce38a */#fdb44b; 
 }
 
 * {
@@ -110,10 +110,22 @@ button:active {
 }
 
 .card {
-    width: 7rem;
-    height: 7rem;
+    width: 6rem;
+    height: 6rem;
     background-color: white;
-    margin: 0 0.3rem;
+    margin: 0.3rem 0.3rem;
     color: black;
     text-align: center;
+}
+
+.card:hover {
+    cursor:pointer;
+}
+
+.hidden {
+    font-size: 0;
+}
+
+.revealed {
+    font-size: 2rem;
 }
