@@ -8,6 +8,7 @@ html {
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
 
 a {
@@ -92,15 +93,22 @@ button:active {
     transform: scale(80%);
 }
 
+img {
+    width: 100px;
+}
+
 .game-container {
+    width: 40vw;
+    height: 70vh;
     padding: 1rem;
     border-width: 0.2rem;
-    border-color: white;
-    border-style: solid;
+    border-radius: 0.5rem;
+    background-color: rgba(14, 95, 118, 0.4);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    flex-wrap: wrap;
+    margin: auto
 }
 
 .card-row {
@@ -110,22 +118,34 @@ button:active {
 }
 
 .card {
-    width: 6rem;
-    height: 6rem;
+    /* width and height are dynamically calculated by JS */
+    position: relative;
+    border-radius: 0.3rem;
     background-color: white;
     margin: 0.3rem 0.3rem;
-    color: black;
-    text-align: center;
+    display: flex;
 }
 
 .card:hover {
     cursor:pointer;
 }
 
+.front-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.back-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
 .hidden {
-    font-size: 0;
+    opacity: 0;
 }
 
 .revealed {
-    font-size: 2rem;
+    transform: rotateX('180deg');
 }
