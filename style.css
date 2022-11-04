@@ -130,6 +130,7 @@ img {
     flex-wrap: wrap;
     margin: 1rem 1rem;
     perspective: 1200px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .card-row {
@@ -229,6 +230,7 @@ img {
 @media (max-width: 500px) {
     .game-container {
         margin: 0rem 2rem;
+        padding: 0.4rem;
     }
 
     #restart {
