@@ -3,14 +3,7 @@ let turnsLabel = document.querySelector("#turns-counter");
 let matchesLabel = document.querySelector("#matches-counter");
 let restartButton = document.querySelector("#restart");
 restartButton.addEventListener("click", restartGame);
-/*
-let cards = [...game.querySelectorAll(".card-row")];
 
-cards.forEach((element,index,array) => array[index] = [...element.querySelectorAll(".card")]);
-
-cards.forEach(row => {
-    row.forEach(card => card.style.backgroundColor = "blue");
-}); */
 class Card {
     constructor(id, element){
         this.id = Math.floor(id);
@@ -44,12 +37,6 @@ let lock = false;
 let cards = [];
 
 initBoard();
-/* for (let i = 0; i < cardsPerRow; i++){
-    cards.push([]);
-    for (let j = 0; j < cardsPerRow; j++){
-        cards[i][j] = new Card();
-    }
-} */
 
 function initBoard(){
     cards = [];
@@ -76,20 +63,6 @@ function initBoard(){
         game.appendChild(myCard.element);
     }
 }
-
-/* cards.forEach(row => {
-    let myRow = document.createElement("div");
-    myRow.className = "card-row";
-    row.forEach(card => {
-        let myCard = document.createElement("img");
-        myCard.className = "card hidden";
-        myCard.textContent = card.id;
-        myCard.src ="./img/kotlin.svg";
-        myCard.addEventListener("click", () => myCard.className = "card revealed");
-        myRow.appendChild(myCard)
-    });
-    game.appendChild(myRow);
-}); */
 
 
 
@@ -154,7 +127,6 @@ function updateMatches(){
 }
 
 function restartGame(){
-    console.log("hello")
     turns = -1;
     matches = -1;
     updateMatches();
