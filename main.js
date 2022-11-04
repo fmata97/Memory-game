@@ -1,4 +1,8 @@
- let game = document.querySelector("#game");
+let game = document.querySelector("#game");
+let turnsLabel = document.querySelector("#turns-counter");
+let matchesLabel = document.querySelector("#matches-counter");
+let restartButton = document.querySelector("#restart");
+restartButton.addEventListener("click", restartGame);
 /*
 let cards = [...game.querySelectorAll(".card-row")];
 
@@ -9,8 +13,8 @@ cards.forEach(row => {
 }); */
 class Card {
     constructor(id, element){
-        this.id = id;
-        this.position = Math.floor(Math.random()*NumberOfCards)
+        this.id = Math.floor(id);
+        this.position = Math.floor(Math.random()*numberOfCards)
         this.flipped = false;
         this.solved = false;
         this.element = element;
@@ -28,9 +32,14 @@ const images = new Map([
     [7, "./img/python.svg"],
 ]);
 
+let turns = 0;
+let matches = 0;
 
-let NumberOfCards = 16;
+let numberOfCards = 16;
 let cardsPerRow = 4;
+
+let firstCard, secondCard;
+let lock = false;
 
 let cards = [];
 
@@ -45,20 +54,24 @@ initBoard();
 function initBoard(){
     cards = [];
     let size = 100/cardsPerRow;
-    for (let i = 0, j = 0; i < NumberOfCards; i++, j++){
-        let myCard = new Card(i, document.createElement("div"));
+    for (let i = 0, j = 0; i < numberOfCards; i++, j++){
+        let myCard = new Card(i/2, document.createElement("div"));
         myCard.element.className = "card";
         myCard.element.style.width = `calc(${size}% - 1.3rem)`;
         myCard.element.style.height = `calc(${size}% - 1.3rem)`;
+        myCard.element.style.order = myCard.position;
+
         let backFace = document.createElement("img");
         backFace.className = "back-face";
         backFace.src = "./img/question-mark.svg";
+
         let frontFace = document.createElement("img");
-        frontFace.className = "front-face hidden";
+        frontFace.className = "front-face";
         frontFace.src = images.get(Math.floor(j/2));
+
         myCard.element.appendChild(backFace);
         myCard.element.appendChild(frontFace);
-        myCard.element.addEventListener("click", revealCard);
+        myCard.element.addEventListener("click", () => revealCard(myCard));
         cards.push(myCard);
         game.appendChild(myCard.element);
     }
@@ -80,6 +93,77 @@ function initBoard(){
 
 
 
-function revealCard(){
-    this.element.classList.toggle("revealed");
+function revealCard(myCard){
+    if (myCard.flipped || lock) return;
+
+    myCard.flipped = true;
+    myCard.element.classList.toggle("revealed");
+
+    selectCard(myCard);
+}
+
+function selectCard(card){
+    updateTurns();
+
+    if (!firstCard){
+        firstCard = card;
+        return;
+    }
+
+    secondCard = card;
+
+    lock = true;
+    checkMatch();
+}
+
+function checkMatch(){
+    if (firstCard.id === secondCard.id){
+        updateMatches();
+        firstCard.solved = true;
+        secondCard.solved = true;
+        firstCard = null;
+        secondCard = null;
+        lock = false;
+        if (matches === numberOfCards/2) setTimeout(gameOver, 500);
+        return;
+    }
+    setTimeout(resetCards, 700);
+}
+
+function resetCards(){
+    firstCard.element.classList.remove("revealed");
+    firstCard.flipped = false;
+    secondCard.element.classList.remove("revealed");
+    secondCard.flipped = false;
+    firstCard = null;
+    secondCard = null;
+    lock = false;
+}
+
+function gameOver(){
+    alert("game over!");
+    restartGame();
+}
+
+function updateTurns(){
+    turnsLabel.textContent = `${++turns}`;
+}
+
+function updateMatches(){
+    matchesLabel.textContent = `${++matches}`;
+}
+
+function restartGame(){
+    console.log("hello")
+    turns = -1;
+    matches = -1;
+    updateMatches();
+    updateTurns();
+
+    firstCard = secondCard = null;
+    lock = false;
+
+    cards = [];
+    game.replaceChildren();
+    initBoard();
 }

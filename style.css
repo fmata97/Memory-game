@@ -9,6 +9,12 @@ html {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 a {
@@ -44,6 +50,7 @@ body {
     background-color: var(--deepBlue);
     color: white;
     font-family: 'Ubuntu', sans-serif;
+    width: 100vw;
 }
 
 .main {
@@ -79,7 +86,7 @@ aside button {
     border-style: solid;
     text-shadow: grey;
     transition-property: background-color, transform;
-    transition-duration: 0.6s, 0.1s;
+    transition-duration: 0.6s, 0.05s;
     transition-timing-function: ease-out;
 }
 
@@ -90,7 +97,7 @@ button:hover {
 
 button:active {
     background: var(--deepBlue);
-    transform: scale(80%);
+    transform: scale(93%);
 }
 
 img {
@@ -98,7 +105,7 @@ img {
 }
 
 .game-container {
-    width: 40vw;
+    width: 32vw;
     height: 70vh;
     padding: 1rem;
     border-width: 0.2rem;
@@ -108,7 +115,8 @@ img {
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
-    margin: auto
+    margin: 2rem, 1rem;
+    perspective: 1200px;
 }
 
 .card-row {
@@ -124,28 +132,39 @@ img {
     background-color: white;
     margin: 0.3rem 0.3rem;
     display: flex;
+    transform-style: preserve-3d;
+    transition: transform 0.3s;
 }
 
 .card:hover {
     cursor:pointer;
 }
 
+.card:active {
+    transform: scale(0.95);
+}
+
 .front-face {
     position: absolute;
     width: 100%;
     height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
 }
 
 .back-face {
     position: absolute;
     width: 100%;
     height: 100%;
+    backface-visibility: hidden;
 }
 
-.hidden {
-    opacity: 0;
+.card.hidden {
+    transition: transform 0.5s;
+    transform: rotateY(180deg);
 }
 
-.revealed {
-    transform: rotateX('180deg');
+.card.revealed {
+    transition: transform 0.5s;
+    transform: rotateY(180deg);
 }
