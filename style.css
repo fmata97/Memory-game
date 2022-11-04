@@ -1,8 +1,8 @@
 html {
-    --deepBlue : #0c2233/* #00204a */; 
-    --blue : #083d56/* #005792 */; 
-    --lightBlue : #0e5f76/* #00bbf0 */;
-    --yellow : /* #fce38a */#fdb44b; 
+    --deepBlue : #0c2233; 
+    --blue : #083d56; 
+    --lightBlue : #0e5f76;
+    --yellow : #fdb44b; 
 }
 
 * {
@@ -24,13 +24,13 @@ a {
 
 nav {
     background-color: var(--blue);
-    width: 100hh;
+    width: 100vw;
+    min-height: 12vh;
     color: var(--yellow);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 12vh;
     border-bottom-width: 0.2rem;
     border-bottom-color: white;
     border-bottom-style: solid;
@@ -43,7 +43,8 @@ nav h1 {
 
 nav h4 {
     font-style: italic;
-    color: white
+    color: white;
+    padding-bottom: 0.5rem;
 }
 
 body {
@@ -55,8 +56,10 @@ body {
 
 .main {
     display: flex;
-    justify-content: space-between;
-    margin-top: 5rem;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1rem;
+    height: 82vh;
 }
 
 aside {
@@ -66,7 +69,15 @@ aside {
     align-items: center;
     justify-content: space-between;
     font-size: 2.2rem;
-    margin: 0 8rem;
+    margin: 0 5vw;
+}
+
+#right {
+    margin-left: 0;
+}
+
+#left {
+    margin-right: 0;
 }
 
 .counters {
@@ -105,7 +116,9 @@ img {
 }
 
 .game-container {
-    width: 32vw;
+    /* width: 40vw; */
+    width: 35rem;
+    min-width: 22rem;
     height: 70vh;
     padding: 1rem;
     border-width: 0.2rem;
@@ -115,7 +128,7 @@ img {
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
-    margin: 2rem, 1rem;
+    margin: 1rem 1rem;
     perspective: 1200px;
 }
 
@@ -134,6 +147,7 @@ img {
     display: flex;
     transform-style: preserve-3d;
     transition: transform 0.3s;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
 }
 
 .card:hover {
@@ -167,4 +181,64 @@ img {
 .card.revealed {
     transition: transform 0.5s;
     transform: rotateY(180deg);
+}
+
+
+@media (max-width: 800px) {
+    .main {
+        flex-wrap: wrap;
+    }
+
+    .game-container {
+        margin: 0rem 3rem;
+        order: 1;
+    }
+
+    #left {
+        order: 2;
+        margin-right: 3rem;
+    }
+
+    #right {
+        order: 4;
+        margin-left: 3rem;
+        margin-right: 2rem;
+    }
+
+    #right .counters {
+        order: 2;
+    }
+
+    #restart {
+        order: 1;
+        position: absolute;
+        left: calc(44% - 1rem);
+    }
+
+
+    aside {
+        height: fit-content;
+        margin-top: 1rem;
+        font-size: 1.8rem;
+        align-items: flex-start;
+        flex-direction: row;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .game-container {
+        margin: 0rem 2rem;
+    }
+
+    #restart {
+        left: calc(44% - 1rem);
+        font-size: 1.3rem;
+        padding: 0.4rem 0.6rem;
+        border-width: 0.2rem;
+    }
+
+    aside {
+        font-size: 1.5rem;
+    }
 }

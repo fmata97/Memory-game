@@ -4,16 +4,17 @@ let matchesLabel = document.querySelector("#matches-counter");
 let restartButton = document.querySelector("#restart");
 restartButton.addEventListener("click", restartGame);
 
+/* Card object */
 class Card {
     constructor(id, element){
         this.id = Math.floor(id);
         this.position = Math.floor(Math.random()*numberOfCards)
         this.flipped = false;
-        this.solved = false;
         this.element = element;
     }
 }
 
+/* Map to associate cards with images */
 const images = new Map([
     [0, "./img/c.svg"],
     [1, "./img/c++.svg"],
@@ -23,30 +24,58 @@ const images = new Map([
     [5, "./img/javascript.svg"],
     [6, "./img/kotlin.svg"],
     [7, "./img/python.svg"],
+    [8, "./img/golang.svg"],
+    [9, "./img/typescript.svg"],
+    [10, "./img/swift.svg"]
 ]);
 
-let turns = 0;
-let matches = 0;
+/* Global variables */
 
-let numberOfCards = 16;
-let cardsPerRow = 4;
+let turns = 0; /* number of times user tried to match a pair */
+let matches = 0; /* number of matches */
 
-let firstCard, secondCard;
-let lock = false;
+let numberOfCards = 0;
+let cardsPerRow = 0;
 
-let cards = [];
+let firstCard, secondCard; /* to select both cards */
+let lock = false; /* while cards are in a transition, the board gets locked */
 
-initBoard();
+let cards = []; /* to store all the cards */
+let level = 0; /* to change difficulty */
+
+/* Starts the game */
+startGame();
+
+
+/* All game functions */
+
+function startGame(){
+    do {
+        level = window.prompt("Level 1: 16 cards\nLevel 2: 20 cards\nWhich do you want to play? (1 / 2)");
+    } while (level != 1 && level != 2);
+    
+    if (level == 1){
+        numberOfCards = 16;
+        cardsPerRow = 4;
+    } else {
+        numberOfCards = 20;
+        cardsPerRow = 5;
+    }
+
+    initBoard();
+}
+
+
 
 function initBoard(){
     cards = [];
-    let size = 100/cardsPerRow;
+    let size = 100/cardsPerRow; /* to know the correct size for each card depending on the cards per row */
     for (let i = 0, j = 0; i < numberOfCards; i++, j++){
-        let myCard = new Card(i/2, document.createElement("div"));
+        let myCard = new Card(i/2, document.createElement("div")); /* creates the card and an HTML element */
         myCard.element.className = "card";
         myCard.element.style.width = `calc(${size}% - 1.3rem)`;
         myCard.element.style.height = `calc(${size}% - 1.3rem)`;
-        myCard.element.style.order = myCard.position;
+        myCard.element.style.order = myCard.position; /* to shuffle the cards */
 
         let backFace = document.createElement("img");
         backFace.className = "back-face";
@@ -76,28 +105,27 @@ function revealCard(myCard){
 }
 
 function selectCard(card){
-    updateTurns();
-
-    if (!firstCard){
+    /* if there's no card selected */
+    if (!firstCard){ 
         firstCard = card;
         return;
     }
 
+    /* if there is, will check for a match */
     secondCard = card;
+    updateTurns();
 
-    lock = true;
+    lock = true; /* locks the board */
     checkMatch();
 }
 
 function checkMatch(){
     if (firstCard.id === secondCard.id){
         updateMatches();
-        firstCard.solved = true;
-        secondCard.solved = true;
-        firstCard = null;
-        secondCard = null;
+        firstCard = secondCard = null;
+        /* unlock the board */
         lock = false;
-        if (matches === numberOfCards/2) setTimeout(gameOver, 500);
+        if (matches === numberOfCards/2) setTimeout(gameOver, 500); /* timeout so the animations have time to play */
         return;
     }
     setTimeout(resetCards, 700);
@@ -114,8 +142,12 @@ function resetCards(){
 }
 
 function gameOver(){
-    alert("game over!");
-    restartGame();
+    let answer;
+    do {
+        answer = window.prompt("You won! Do you want to play again? (y / n)")
+    } while (answer != "y" && answer != "n");
+    
+    if (answer === "y") restartGame();
 }
 
 function updateTurns(){
@@ -137,5 +169,12 @@ function restartGame(){
 
     cards = [];
     game.replaceChildren();
-    initBoard();
+
+    let answer;
+    do {
+        answer = window.prompt("Do you wish to change difficulty? (y / n)")
+    } while (answer != "y" && answer != "n");
+
+    if (answer === "y") startGame();
+    else initBoard();
 }
